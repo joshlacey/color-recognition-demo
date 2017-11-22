@@ -1,62 +1,57 @@
-// const express = require('express');
-// const app = express();
-//
-//
-// app.use('/static', express.static('static'));
-// app.all('*', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-//
-// app.listen(process.env.PORT || 3000);
 
 window.onload = function() {
   var video = document.getElementById('video'),
-      // canvas = document.getElementById('canvas'),
-      // context = canvas.getContext('2d'),
-      tracker = new tracking.ColorTracker(['magenta']);
-
-
-  var positions = [0]
-  var timeNow = Date.now()
+      tracker = new tracking.ColorTracker(['magenta']),
+      LRpositions = [],
+      TBpositions = [],
+      timeNow = Date.now();
 
   tracking.track('#video', tracker, { camera: true })
 
   tracker.on('track', function(event) {
     event.data.forEach(function(rect) {
      if (rect.color === 'magenta') {
-        positions.push(rect.x)
-        console.log(positions[positions.length-1] - positions[0])
+        LRpositions.push(rect.x)
+        TBpositions.push(rect.y)
       }
     })
   })
 
-  //add Animate function to swipe.
-
   function swipeScreenRL() {
     console.log("swiped Right to Left")
-    cube.rotation.y += 500
-    render()
-    console.log("rotation", cube.rotation.y)
-    positions = []
+    $('.carousel').carousel('next')
+    LRpositions = []
   }
 
   function swipeScreenLR() {
     console.log("swiped Left to Right")
-    cube.rotation.y -= 500
-    render()
-    console.log("rotation", cube.rotation.y)
+    $('.carousel').carousel('prev')
+    LRpositions = []
+  }
 
-    positions = []
+  function swipeScreenTB() {
+    console.log("swiped Top to Bottom")
+    TBpositions=[]
+  }
+
+  function swipeScreenBT() {
+    console.log("swiped Bottom to Top")
+    TBpositions=[]
   }
 
   (function loop() {
-    if(positions[positions.length-1] - positions[0] > 200) {
+    if(LRpositions[LRpositions.length-1] - LRpositions[0] > 200) {
       swipeScreenRL()
-    } else if(positions[positions.length-1] - positions[0] < -200) {
+    } else if(LRpositions[LRpositions.length-1] - LRpositions[0] < -200) {
       swipeScreenLR()
+    } else if(TBpositions[TBpositions.length-1] - TBpositions[0] > 200) {
+      swipeScreenTB()
+    } else if(TBpositions[TBpositions.length-1] - TBpositions[0] < -200) {
+      swipeScreenBT()
     }
     if ((Date.now() - timeNow) > 1000) {
-      positions = []
+      LRpositions = []
+      TBpositions = []
       timeNow = Date.now()
     }
     requestAnimationFrame(loop)
