@@ -60,6 +60,8 @@ window.onload = function() {
     switchPage(currentPage)
   }
 
+  //this loop constantly checks for swiping actions
+  //actions are triggered if x or y values stored in an array differ at the beginning and end by 200
   (function loop() {
     if(LRpositions[LRpositions.length-1] - LRpositions[0] > 200) {
       swipeScreenRL()
@@ -70,6 +72,7 @@ window.onload = function() {
     } else if(TBpositions[TBpositions.length-1] - TBpositions[0] < -200) {
       swipeScreenBT()
     }
+    //after 1000 milliseconds reset the position arrays are reset so that differing can be decently accurate
     if ((Date.now() - timeNow) > 1000) {
       LRpositions = []
       TBpositions = []

@@ -26,6 +26,12 @@ function carouselPage1 () {
           <p> Swipe down to see another cool thing that you can spin</p>
           <pre style="color: white;">&#8681;   &#8681;   &#8681;</pre>
 
+          <p></p>
+          <p></p>
+          <p style="font-size: 1em; text-align:center;">This demo is using bootstrap carousel which currently has a glitch if you swipe too fast.<br>
+          If you notice the swiping no longer working try refreshing the browser.
+          </p>
+
         </div>
         <div class="carousel-item">
           <img class="d-block img-fluid" src="img/tshirtFront.png" alt="Second slide">
@@ -51,9 +57,3 @@ function carouselPage1 () {
       </div>`
   )
 }
-//
-// function cubePage2 () {
-//   return (
-//     `<p>Cube Page</p>`
-//   )
-// }
