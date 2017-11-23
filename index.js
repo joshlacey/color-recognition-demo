@@ -4,6 +4,7 @@ window.onload = function() {
       tracker = new tracking.ColorTracker(['magenta']),
       LRpositions = [],
       TBpositions = [],
+      currentPage = 1,
       timeNow = Date.now();
 
   tracking.track('#video', tracker, { camera: true })
@@ -17,26 +18,46 @@ window.onload = function() {
     })
   })
 
+  switchPage(currentPage)
+
   function swipeScreenRL() {
     console.log("swiped Right to Left")
-    $('.carousel').carousel('next')
+    if(currentPage === 1){
+      $('.carousel').carousel('next')
+    } else if (currentPage === 2) {
+      animate(.2)
+    }
     LRpositions = []
   }
 
   function swipeScreenLR() {
     console.log("swiped Left to Right")
-    $('.carousel').carousel('prev')
+    if(currentPage === 1) {
+      $('.carousel').carousel('prev')
+    } else if (currentPage === 2) {
+      animate(-.2)
+    }
     LRpositions = []
   }
 
   function swipeScreenTB() {
     console.log("swiped Top to Bottom")
     TBpositions=[]
+    if (currentPage === 2) {
+      return null
+    }
+    currentPage++
+    switchPage(currentPage)
   }
 
   function swipeScreenBT() {
     console.log("swiped Bottom to Top")
     TBpositions=[]
+    if (currentPage === 1){
+      return null
+    }
+    --currentPage
+    switchPage(currentPage)
   }
 
   (function loop() {
